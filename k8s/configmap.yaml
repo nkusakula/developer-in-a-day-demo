@@ -1,0 +1,27 @@
+# =============================================================
+# Environment-specific runtime configuration (injected at deploy)
+# Secrets are NEVER stored here — use Kubernetes Secrets or Vault.
+# =============================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-app-config
+  namespace: demo
+  labels:
+    app: demo-app
+    environment: production
+data:
+  NODE_ENV: "production"
+  APP_VERSION: "REPLACED_BY_CD_PIPELINE"
+  LOG_LEVEL: "warn"
+  PORT: "3000"
+---
+# Staging config overlay (separate file or Kustomize overlay in practice)
+# Shown here for demo purposes only
+#
+# NODE_ENV: staging
+# LOG_LEVEL: info
+#
+# Development config:
+# NODE_ENV: development
+# LOG_LEVEL: debug
