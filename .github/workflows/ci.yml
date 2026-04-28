@@ -53,8 +53,8 @@ jobs:
         continue-on-error: true
 
       - name: Upload ESLint SARIF to Security dashboard
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        if: always() && hashFiles('eslint-results.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: eslint-results.sarif
           category: eslint
@@ -74,15 +74,15 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
 
-      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/autobuild@v4
 
       - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           category: codeql-${{ matrix.language }}
 
@@ -201,7 +201,7 @@ jobs:
       - name: Trivy — container vulnerability scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}:latest
+          image-ref: ghcr.io/${{ github.repository }}:${{ steps.meta.outputs.version }}
           format: sarif
           output: trivy-container.sarif
           severity: CRITICAL,HIGH
@@ -213,8 +213,8 @@ jobs:
         continue-on-error: true
 
       - name: Upload Trivy SARIF
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        if: always() && hashFiles('trivy-container.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: trivy-container.sarif
           category: trivy-container
@@ -245,14 +245,15 @@ jobs:
           image: ghcr.io/${{ github.repository }}:latest
           fail-build: false
           output-format: sarif
+          output: grype-results.sarif
           severity-cutoff: high
         continue-on-error: true
 
       - name: Upload Grype SARIF
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        if: always() && hashFiles('grype-results.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: ${{ steps.grype.outputs.sarif }}
+          sarif_file: grype-results.sarif
           category: grype
 
       - name: Install cosign
