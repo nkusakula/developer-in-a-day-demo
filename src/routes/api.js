@@ -1,7 +1,5 @@
 'use strict';
 
-const unused = 'demo'; // deliberate lint error for Act 2.5 demo
-
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const client = require('prom-client');
