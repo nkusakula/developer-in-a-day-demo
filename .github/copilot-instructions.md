@@ -43,7 +43,8 @@ Check the **Security** tab → **Code scanning alerts**. Common JS issues:
 
 ### License check failure
 Run `npm run license-check` locally. Approved licenses:
-`MIT, Apache-2.0, ISC, BSD-2-Clause, BSD-3-Clause, 0BSD, Unlicense`.
+`MIT, Apache-2.0, ISC, BSD-2-Clause, BSD-3-Clause, 0BSD, Unlicense, CC0-1.0, Python-2.0, CC-BY-3.0, CC-BY-4.0, LGPL-2.1+`.
+For `LGPL-2.1+` packages: use `--excludePackages '<package>'` in the license-check script (do not add to `--onlyAllow` — the `+` breaks regex matching in license-checker).
 For a non-approved license: find an alternative package or open an exception request.
 
 ### Deploy gate blocked
