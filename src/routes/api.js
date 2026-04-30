@@ -53,6 +53,20 @@ router.get('/items', (req, res) => {
 });
 
 /**
+ * GET /api/items/search
+ * Filters items by category query param
+ */
+router.get('/items/search', (req, res) => {
+  const { category } = req.query;
+  if (!category || typeof category !== 'string' || category.trim().length === 0) {
+    return res.status(400).json({ error: 'Query param "category" is required and must be a non-empty string' });
+  }
+  const normalised = category.trim().toLowerCase();
+  const results = items.filter(i => i.category.toLowerCase() === normalised);
+  res.json({ items: results, total: results.length });
+});
+
+/**
  * GET /api/items/:id
  * Returns a single item by numeric ID
  */

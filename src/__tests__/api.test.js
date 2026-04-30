@@ -22,6 +22,44 @@ describe('API — Items', () => {
     });
   });
 
+  describe('GET /api/items/search', () => {
+    it('returns items matching the given category', async () => {
+      const res = await request(app).get('/api/items/search?category=demo');
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('items');
+      expect(res.body).toHaveProperty('total');
+      expect(Array.isArray(res.body.items)).toBe(true);
+      res.body.items.forEach(item => {
+        expect(item.category.toLowerCase()).toBe('demo');
+      });
+    });
+
+    it('returns empty array when no items match the category', async () => {
+      const res = await request(app).get('/api/items/search?category=nonexistent');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.items).toHaveLength(0);
+      expect(res.body.total).toBe(0);
+    });
+
+    it('is case-insensitive for category matching', async () => {
+      const res = await request(app).get('/api/items/search?category=DEMO');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.items.length).toBeGreaterThan(0);
+    });
+
+    it('returns 400 when category param is missing', async () => {
+      const res = await request(app).get('/api/items/search');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('returns 400 when category param is blank', async () => {
+      const res = await request(app).get('/api/items/search?category=%20');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+  });
+
   describe('GET /api/items/:id', () => {
     it('returns a specific item by ID', async () => {
       const res = await request(app).get('/api/items/1');
