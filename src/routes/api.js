@@ -1,5 +1,4 @@
 'use strict';
-
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const client = require('prom-client');
@@ -51,20 +50,6 @@ router.get('/items', (req, res) => {
     items: paged,
     pagination: { page, limit, total: items.length, pages: Math.ceil(items.length / limit) }
   });
-});
-
-/**
- * GET /api/items/search
- * Filters items by category query param
- */
-router.get('/items/search', (req, res) => {
-  const { category } = req.query;
-  if (!category || typeof category !== 'string' || category.trim().length === 0) {
-    return res.status(400).json({ error: 'Query param "category" is required and must be a non-empty string' });
-  }
-  const normalised = category.trim().toLowerCase();
-  const results = items.filter(i => i.category.toLowerCase() === normalised);
-  res.json({ items: results, total: results.length });
 });
 
 /**
