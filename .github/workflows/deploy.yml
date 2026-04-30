@@ -2,6 +2,7 @@
 # CD Pipeline — Environment Promotion
 # Stages: development (auto) -> staging (auto) -> production (manual approval)
 # Change record created automatically before production deploy.
+# Trigger: chains off CI completion on main and release/** branches.
 # =============================================================
 name: CD — Deploy to Environments
 
@@ -9,7 +10,7 @@ on:
   workflow_run:
     workflows: ["CI — Build, Test & Security Gates"]
     types: [completed]
-    branches: [main]
+    branches: [main, 'release/**']
 
 permissions:
   contents: read
