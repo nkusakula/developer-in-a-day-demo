@@ -186,6 +186,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          load: true
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -195,21 +196,18 @@ jobs:
             BUILD_DATE=${{ github.event.head_commit.timestamp }}
             GIT_SHA=${{ github.sha }}
             VERSION=${{ steps.meta.outputs.version }}
-          provenance: true
-          sbom: true
+          provenance: ${{ github.ref == 'refs/heads/main' }}
+          sbom: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Trivy — container vulnerability scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}:${{ steps.meta.outputs.version }}
+          image-ref: ${{ steps.meta.outputs.version }}
           format: sarif
           output: trivy-container.sarif
           severity: CRITICAL,HIGH
           exit-code: '1'
           ignore-unfixed: true
-        env:
-          TRIVY_USERNAME: ${{ github.actor }}
-          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Upload Trivy SARIF
@@ -220,9 +218,10 @@ jobs:
           category: trivy-container
 
       - name: Trivy — generate SBOM (SPDX-JSON)
+        if: github.ref == 'refs/heads/main'
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}:latest
+          image-ref: ghcr.io/${{ github.repository }}:${{ steps.meta.outputs.version }}
           format: spdx-json
           output: sbom.spdx.json
         env:
@@ -231,7 +230,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload SBOM artifact
-        if: always()
+        if: github.ref == 'refs/heads/main' && always()
         uses: actions/upload-artifact@v4
         with:
           name: sbom-${{ github.run_number }}
