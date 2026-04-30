@@ -2,6 +2,7 @@
 # CD Pipeline — Environment Promotion
 # Stages: development (auto) -> staging (auto) -> production (manual approval)
 # Change record created automatically before production deploy.
+# Trigger: chains off CI completion on main and release/** branches.
 # =============================================================
 name: CD — Deploy to Environments
 
