@@ -249,7 +249,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload Grype SARIF
-        if: github.ref == 'refs/heads/main' && always() && steps.grype.outputs.sarif != ''
+        if: github.ref == 'refs/heads/main' && steps.grype.conclusion == 'success' && steps.grype.outputs.sarif != ''
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
