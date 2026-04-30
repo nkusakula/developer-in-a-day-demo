@@ -1,5 +1,6 @@
 # Developer-in-a-Day Demo
 
+
 End-to-end DevSecOps platform demo on GitHub — **30-minute happy path** showing how a developer starts the day in the IDE and, without any manual handoffs, ships signed, scanned, compliance-evidenced code to production.
 
 ## Architecture at a Glance
@@ -101,6 +102,9 @@ See [docs/demo-script.md](docs/demo-script.md) for the full 30-minute facilitate
 | Signing | Sigstore keyless (OIDC, no long-lived keys) |
 | Runtime | Kubernetes non-root securityContext, resource limits |
 | Compliance | Automated change records, 90-day artifact retention |
+
+
+#Random-update
 
 ## License
 
