@@ -51,6 +51,26 @@ jobs:
           sarif_file: trivy-nightly.sarif
           category: trivy-nightly
 
+      # On PRs the container image isn't pushed yet, so run a filesystem scan
+      # under the trivy-nightly category so GitHub can establish a baseline.
+      - name: Trivy — filesystem scan (PR baseline for trivy-nightly)
+        if: github.event_name == 'pull_request'
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: sarif
+          output: trivy-nightly.sarif
+          severity: CRITICAL,HIGH,MEDIUM
+        continue-on-error: true
+
+      - name: Upload trivy-nightly SARIF (PR)
+        if: github.event_name == 'pull_request' && always() && hashFiles('trivy-nightly.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: trivy-nightly.sarif
+          category: trivy-nightly
+
       - name: Trivy — filesystem scan
         uses: aquasecurity/trivy-action@master
         with:
