@@ -186,7 +186,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          load: true
+          load: ${{ github.event_name == 'pull_request' }}
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -208,6 +208,9 @@ jobs:
           severity: CRITICAL,HIGH
           exit-code: '1'
           ignore-unfixed: true
+        env:
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Upload Trivy SARIF
@@ -286,7 +289,8 @@ jobs:
           if [[ "${{ needs.static-analysis.result }}" != "success" || \
                 "${{ needs.codeql.result }}" != "success" || \
                 "${{ needs.license-check.result }}" != "success" || \
-                "${{ needs.test.result }}" != "success" ]]; then
+                "${{ needs.test.result }}" != "success" || \
+                "${{ needs.container-security.result }}" != "success" ]]; then
             echo "One or more required gates failed."
             exit 1
           fi
