@@ -6,7 +6,7 @@
 # =============================================================
 
 # ── Stage 1: Dependency install ──────────────────────────────
-FROM node:20-alpine AS deps
+FROM node:25-alpine AS deps
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ COPY . .
 RUN npm test
 
 # ── Stage 3: Production image ─────────────────────────────────
-FROM node:20-alpine AS production
+FROM node:25-alpine AS production
 
 # Security hardening: create dedicated non-root user
 RUN addgroup -g 1001 -S nodejs && \
