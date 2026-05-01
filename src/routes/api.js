@@ -115,4 +115,42 @@ router.post('/items', (req, res) => {
   res.status(201).json(newItem);
 });
 
+/**
+ * PUT /api/items/:id
+ * Updates name and/or category of an existing item
+ */
+router.put('/items/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id) || id < 1) {
+    return res.status(400).json({ error: 'Invalid item ID — must be a positive integer' });
+  }
+
+  const body = req.body || {};
+  const { name, category } = body;
+  if (!name && !category) {
+    return res.status(400).json({ error: 'Request body must include at least one of "name" or "category"' });
+  }
+
+  const item = items.find(i => i.id === id);
+  if (!item) {
+    return res.status(404).json({ error: `Item ${id} not found` });
+  }
+
+  if (name !== undefined) {
+    if (typeof name !== 'string' || name.trim().length === 0) {
+      return res.status(400).json({ error: 'Field "name" must be a non-empty string' });
+    }
+    item.name = name.trim().slice(0, 200);
+  }
+
+  if (category !== undefined) {
+    if (typeof category !== 'string' || category.trim().length === 0) {
+      return res.status(400).json({ error: 'Field "category" must be a non-empty string' });
+    }
+    item.category = category.trim().slice(0, 50);
+  }
+
+  res.json(item);
+});
+
 module.exports = router;
