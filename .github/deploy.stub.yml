@@ -1,8 +1,7 @@
 # =============================================================
-# CD Pipeline — Environment Promotion
-# Stages: development (auto) -> staging (auto) -> production (manual approval)
-# Change record created automatically before production deploy.
-# Trigger: chains off CI completion on main and release/** branches.
+# STUB BACKUP — echo-only version of deploy.yml
+# Restore: copy this file over deploy.yml
+# This file was saved before wiring real kubectl commands (2026-04-30).
 # =============================================================
 name: CD — Deploy to Environments
 
@@ -53,24 +52,11 @@ jobs:
           echo "Injecting config for ${ENVIRONMENT}: APP_VERSION=${IMAGE_TAG}, NODE_ENV=${ENVIRONMENT}, LOG_LEVEL=debug"
           # In production: pull from GitHub Secrets / Vault — never baked into image
 
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Set AKS context
-        uses: azure/aks-set-context@v3
-        with:
-          resource-group: rg-demo-aks
-          cluster-name: aks-demo
-
       - name: Deploy to development
         run: |
           echo "[$(date -u)] Deploying ghcr.io/${{ github.repository }}:${IMAGE_TAG} to ${ENVIRONMENT}"
-          kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG} -n demo
-          kubectl rollout status deployment/demo-app -n demo --timeout=120s
+          # kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG}
+          # kubectl rollout status deployment/demo-app --timeout=120s
           echo "Development deployment complete"
 
       - name: Smoke test — liveness
@@ -99,24 +85,9 @@ jobs:
         run: |
           echo "Injecting config for ${ENVIRONMENT}: APP_VERSION=${IMAGE_TAG}, NODE_ENV=${ENVIRONMENT}, LOG_LEVEL=info"
 
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Set AKS context
-        uses: azure/aks-set-context@v3
-        with:
-          resource-group: rg-demo-aks
-          cluster-name: aks-demo
-
       - name: Deploy to staging
         run: |
           echo "[$(date -u)] Deploying ${IMAGE_TAG} to ${ENVIRONMENT}"
-          kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG} -n demo
-          kubectl rollout status deployment/demo-app -n demo --timeout=120s
           echo "Staging deployment complete"
 
       - name: Integration tests
@@ -208,24 +179,9 @@ jobs:
         run: |
           echo "Injecting config: APP_VERSION=${IMAGE_TAG}, NODE_ENV=production, LOG_LEVEL=warn"
 
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Set AKS context
-        uses: azure/aks-set-context@v3
-        with:
-          resource-group: rg-demo-aks
-          cluster-name: aks-demo
-
       - name: Deploy to production
         run: |
           echo "[$(date -u)] Deploying ${IMAGE_TAG} to production"
-          kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG} -n demo
-          kubectl rollout status deployment/demo-app -n demo --timeout=120s
           echo "Production deployment complete"
 
       - name: Production health validation
