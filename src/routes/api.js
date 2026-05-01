@@ -38,13 +38,26 @@ const items = [
 
 /**
  * GET /api/items
- * Returns paginated item list
+ * Returns paginated item list; optional `sort` param (asc|desc) orders by name
  */
 router.get('/items', (req, res) => {
+  const { sort } = req.query;
+  if (sort !== undefined && sort !== 'asc' && sort !== 'desc') {
+    return res.status(400).json({ error: 'Query param "sort" must be "asc" or "desc"' });
+  }
+
   const page = Math.max(1, parseInt(req.query.page, 10) || 1);
   const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 10));
   const offset = (page - 1) * limit;
-  const paged = items.slice(offset, offset + limit);
+
+  let sorted = items.slice();
+  if (sort === 'asc') {
+    sorted.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sort === 'desc') {
+    sorted.sort((a, b) => b.name.localeCompare(a.name));
+  }
+
+  const paged = sorted.slice(offset, offset + limit);
 
   res.json({
     items: paged,
