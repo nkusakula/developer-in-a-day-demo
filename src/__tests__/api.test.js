@@ -1,5 +1,4 @@
 'use strict';
-const unused = 'demo';
 const request = require('supertest');
 const app = require('../app');
 
