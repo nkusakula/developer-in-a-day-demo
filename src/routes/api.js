@@ -2,7 +2,6 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const client = require('prom-client');
-const unused = 'demo';
 const router = express.Router();
 
 // ── Custom Prometheus metrics ──────────────────────────────────
