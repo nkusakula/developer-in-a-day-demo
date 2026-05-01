@@ -80,6 +80,14 @@ router.get('/items/search', (req, res) => {
 });
 
 /**
+ * GET /api/items/count
+ * Returns the total number of items
+ */
+router.get('/items/count', (req, res) => {
+  res.json({ count: items.length });
+});
+
+/**
  * GET /api/items/:id
  * Returns a single item by numeric ID
  */

@@ -44,6 +44,16 @@ describe('API — Items', () => {
     });
   });
 
+  describe('GET /api/items/count', () => {
+    it('returns a JSON object with a numeric count', async () => {
+      const res = await request(app).get('/api/items/count');
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('count');
+      expect(typeof res.body.count).toBe('number');
+      expect(res.body.count).toBeGreaterThan(0);
+    });
+  });
+
   describe('GET /api/items/search', () => {
     it('returns items matching the given category', async () => {
       const res = await request(app).get('/api/items/search?category=demo');
