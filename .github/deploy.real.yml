@@ -1,7 +1,8 @@
 # =============================================================
-# STUB BACKUP — echo-only version of deploy.yml
-# Restore: copy this file over deploy.yml
-# This file was saved before wiring real kubectl commands (2026-04-30).
+# CD Pipeline — Environment Promotion
+# Stages: development (auto) -> staging (auto) -> production (manual approval)
+# Change record created automatically before production deploy.
+# Trigger: chains off CI completion on main and release/** branches.
 # =============================================================
 name: CD — Deploy to Environments
 
@@ -66,8 +67,8 @@ jobs:
       - name: Deploy to development
         run: |
           echo "[$(date -u)] Deploying ghcr.io/${{ github.repository }}:${IMAGE_TAG} to ${ENVIRONMENT}"
-          # kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG}
-          # kubectl rollout status deployment/demo-app --timeout=120s
+          kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG} -n demo
+          kubectl rollout status deployment/demo-app -n demo --timeout=120s
           echo "Development deployment complete"
 
       - name: Smoke test — liveness
@@ -110,6 +111,8 @@ jobs:
       - name: Deploy to staging
         run: |
           echo "[$(date -u)] Deploying ${IMAGE_TAG} to ${ENVIRONMENT}"
+          kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG} -n demo
+          kubectl rollout status deployment/demo-app -n demo --timeout=120s
           echo "Staging deployment complete"
 
       - name: Integration tests
@@ -215,6 +218,8 @@ jobs:
       - name: Deploy to production
         run: |
           echo "[$(date -u)] Deploying ${IMAGE_TAG} to production"
+          kubectl set image deployment/demo-app demo-app=ghcr.io/${{ github.repository }}:${IMAGE_TAG} -n demo
+          kubectl rollout status deployment/demo-app -n demo --timeout=120s
           echo "Production deployment complete"
 
       - name: Production health validation
