@@ -1,5 +1,4 @@
 'use strict';
-
 const request = require('supertest');
 const app = require('../app');
 
@@ -147,6 +146,83 @@ describe('API — Items', () => {
         .send({ name: '   ' })
         .set('Content-Type', 'application/json');
       expect(res.statusCode).toBe(400);
+    });
+  });
+
+  describe('PUT /api/items/:id', () => {
+    it('updates an existing item name', async () => {
+      const res = await request(app)
+        .put('/api/items/1')
+        .send({ name: 'Updated Name' })
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.id).toBe(1);
+      expect(res.body.name).toBe('Updated Name');
+    });
+
+    it('updates an existing item category', async () => {
+      const res = await request(app)
+        .put('/api/items/2')
+        .send({ category: 'updated-category' })
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.id).toBe(2);
+      expect(res.body.category).toBe('updated-category');
+    });
+
+    it('updates both name and category', async () => {
+      const res = await request(app)
+        .put('/api/items/3')
+        .send({ name: 'New Name', category: 'new-cat' })
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.name).toBe('New Name');
+      expect(res.body.category).toBe('new-cat');
+    });
+
+    it('returns 400 when request body is empty', async () => {
+      const res = await request(app)
+        .put('/api/items/1')
+        .send({})
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('returns 400 when name is an empty string', async () => {
+      const res = await request(app)
+        .put('/api/items/1')
+        .send({ name: '   ' })
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('returns 400 when category is an empty string', async () => {
+      const res = await request(app)
+        .put('/api/items/1')
+        .send({ category: '   ' })
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('returns 404 for non-existent item', async () => {
+      const res = await request(app)
+        .put('/api/items/9999')
+        .send({ name: 'Ghost' })
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(404);
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('returns 400 for non-numeric ID', async () => {
+      const res = await request(app)
+        .put('/api/items/not-a-number')
+        .send({ name: 'X' })
+        .set('Content-Type', 'application/json');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
     });
   });
 });
