@@ -20,6 +20,28 @@ describe('API — Items', () => {
       expect(res.body.pagination.limit).toBe(2);
       expect(res.body.pagination.page).toBe(1);
     });
+
+    it('returns items sorted ascending by name when sort=asc', async () => {
+      const res = await request(app).get('/api/items?sort=asc');
+      expect(res.statusCode).toBe(200);
+      const names = res.body.items.map(i => i.name);
+      const sorted = names.slice().sort((a, b) => a.localeCompare(b));
+      expect(names).toEqual(sorted);
+    });
+
+    it('returns items sorted descending by name when sort=desc', async () => {
+      const res = await request(app).get('/api/items?sort=desc');
+      expect(res.statusCode).toBe(200);
+      const names = res.body.items.map(i => i.name);
+      const sorted = names.slice().sort((a, b) => b.localeCompare(a));
+      expect(names).toEqual(sorted);
+    });
+
+    it('returns 400 when sort param is invalid', async () => {
+      const res = await request(app).get('/api/items?sort=random');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
   });
 
   describe('GET /api/items/search', () => {
