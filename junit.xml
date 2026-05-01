@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="18" failures="0" errors="0" time="1.408">
-  <testsuite name="API — Items" errors="0" failures="0" skipped="0" timestamp="2026-05-01T14:41:46" time="1.091" tests="18">
-    <testcase classname="API — Items GET /api/items returns paginated item list" name="API — Items GET /api/items returns paginated item list" time="0.03">
+<testsuites name="jest tests" tests="30" failures="0" errors="0" time="1.502">
+  <testsuite name="API — Items" errors="0" failures="0" skipped="0" timestamp="2026-05-01T16:09:52" time="1.156" tests="30">
+    <testcase classname="API — Items GET /api/items returns paginated item list" name="API — Items GET /api/items returns paginated item list" time="0.028">
     </testcase>
-    <testcase classname="API — Items GET /api/items supports pagination parameters" name="API — Items GET /api/items supports pagination parameters" time="0.005">
+    <testcase classname="API — Items GET /api/items supports pagination parameters" name="API — Items GET /api/items supports pagination parameters" time="0.009">
     </testcase>
-    <testcase classname="API — Items GET /api/items returns items sorted ascending by name when sort=asc" name="API — Items GET /api/items returns items sorted ascending by name when sort=asc" time="0.012">
+    <testcase classname="API — Items GET /api/items returns items sorted ascending by name when sort=asc" name="API — Items GET /api/items returns items sorted ascending by name when sort=asc" time="0.011">
     </testcase>
-    <testcase classname="API — Items GET /api/items returns items sorted descending by name when sort=desc" name="API — Items GET /api/items returns items sorted descending by name when sort=desc" time="0.002">
+    <testcase classname="API — Items GET /api/items returns items sorted descending by name when sort=desc" name="API — Items GET /api/items returns items sorted descending by name when sort=desc" time="0.004">
     </testcase>
-    <testcase classname="API — Items GET /api/items returns 400 when sort param is invalid" name="API — Items GET /api/items returns 400 when sort param is invalid" time="0.005">
+    <testcase classname="API — Items GET /api/items returns 400 when sort param is invalid" name="API — Items GET /api/items returns 400 when sort param is invalid" time="0.003">
     </testcase>
     <testcase classname="API — Items GET /api/items/count returns a JSON object with a numeric count" name="API — Items GET /api/items/count returns a JSON object with a numeric count" time="0.003">
     </testcase>
-    <testcase classname="API — Items GET /api/items/search returns items matching the given category" name="API — Items GET /api/items/search returns items matching the given category" time="0.003">
+    <testcase classname="API — Items GET /api/items/search returns items matching the given category" name="API — Items GET /api/items/search returns items matching the given category" time="0.004">
     </testcase>
-    <testcase classname="API — Items GET /api/items/search returns empty array when no items match the category" name="API — Items GET /api/items/search returns empty array when no items match the category" time="0.003">
+    <testcase classname="API — Items GET /api/items/search returns empty array when no items match the category" name="API — Items GET /api/items/search returns empty array when no items match the category" time="0.004">
     </testcase>
     <testcase classname="API — Items GET /api/items/search is case-insensitive for category matching" name="API — Items GET /api/items/search is case-insensitive for category matching" time="0.005">
     </testcase>
-    <testcase classname="API — Items GET /api/items/search returns 400 when category param is missing" name="API — Items GET /api/items/search returns 400 when category param is missing" time="0.004">
+    <testcase classname="API — Items GET /api/items/search returns 400 when category param is missing" name="API — Items GET /api/items/search returns 400 when category param is missing" time="0.002">
     </testcase>
-    <testcase classname="API — Items GET /api/items/search returns 400 when category param is blank" name="API — Items GET /api/items/search returns 400 when category param is blank" time="0.004">
+    <testcase classname="API — Items GET /api/items/search returns 400 when category param is blank" name="API — Items GET /api/items/search returns 400 when category param is blank" time="0.003">
     </testcase>
     <testcase classname="API — Items GET /api/items/:id returns a specific item by ID" name="API — Items GET /api/items/:id returns a specific item by ID" time="0.003">
     </testcase>
@@ -29,29 +29,37 @@
     </testcase>
     <testcase classname="API — Items GET /api/items/:id returns 400 for non-numeric ID" name="API — Items GET /api/items/:id returns 400 for non-numeric ID" time="0.002">
     </testcase>
-    <testcase classname="API — Items GET /api/items/:id returns 400 for zero or negative ID" name="API — Items GET /api/items/:id returns 400 for zero or negative ID" time="0.002">
+    <testcase classname="API — Items GET /api/items/:id returns 400 for zero or negative ID" name="API — Items GET /api/items/:id returns 400 for zero or negative ID" time="0.003">
     </testcase>
-    <testcase classname="API — Items POST /api/items creates a new item with valid payload" name="API — Items POST /api/items creates a new item with valid payload" time="0.014">
+    <testcase classname="API — Items POST /api/items creates a new item with valid payload" name="API — Items POST /api/items creates a new item with valid payload" time="0.016">
     </testcase>
-    <testcase classname="API — Items POST /api/items returns 400 when name is missing" name="API — Items POST /api/items returns 400 when name is missing" time="0.003">
+    <testcase classname="API — Items POST /api/items returns 400 when name is missing" name="API — Items POST /api/items returns 400 when name is missing" time="0.004">
     </testcase>
     <testcase classname="API — Items POST /api/items returns 400 for empty name string" name="API — Items POST /api/items returns 400 for empty name string" time="0.003">
     </testcase>
-    <testcase classname="API — Items PUT /api/items/:id updates an existing item name" name="API — Items PUT /api/items/:id updates an existing item name" time="0.003">
+    <testcase classname="API — Items PUT /api/items/:id updates an existing item name" name="API — Items PUT /api/items/:id updates an existing item name" time="0.004">
     </testcase>
     <testcase classname="API — Items PUT /api/items/:id updates an existing item category" name="API — Items PUT /api/items/:id updates an existing item category" time="0.003">
     </testcase>
-    <testcase classname="API — Items PUT /api/items/:id updates both name and category" name="API — Items PUT /api/items/:id updates both name and category" time="0.002">
+    <testcase classname="API — Items PUT /api/items/:id updates both name and category" name="API — Items PUT /api/items/:id updates both name and category" time="0.003">
     </testcase>
     <testcase classname="API — Items PUT /api/items/:id returns 400 when request body is empty" name="API — Items PUT /api/items/:id returns 400 when request body is empty" time="0.003">
     </testcase>
-    <testcase classname="API — Items PUT /api/items/:id returns 400 when name is an empty string" name="API — Items PUT /api/items/:id returns 400 when name is an empty string" time="0.003">
+    <testcase classname="API — Items PUT /api/items/:id returns 400 when name is an empty string" name="API — Items PUT /api/items/:id returns 400 when name is an empty string" time="0.002">
     </testcase>
     <testcase classname="API — Items PUT /api/items/:id returns 400 when category is an empty string" name="API — Items PUT /api/items/:id returns 400 when category is an empty string" time="0.003">
     </testcase>
-    <testcase classname="API — Items PUT /api/items/:id returns 404 for non-existent item" name="API — Items PUT /api/items/:id returns 404 for non-existent item" time="0.002">
+    <testcase classname="API — Items PUT /api/items/:id returns 404 for non-existent item" name="API — Items PUT /api/items/:id returns 404 for non-existent item" time="0.005">
     </testcase>
-    <testcase classname="API — Items PUT /api/items/:id returns 400 for non-numeric ID" name="API — Items PUT /api/items/:id returns 400 for non-numeric ID" time="0.003">
+    <testcase classname="API — Items PUT /api/items/:id returns 400 for non-numeric ID" name="API — Items PUT /api/items/:id returns 400 for non-numeric ID" time="0.002">
+    </testcase>
+    <testcase classname="API — Items DELETE /api/items/:id returns 204 and removes the item on success" name="API — Items DELETE /api/items/:id returns 204 and removes the item on success" time="0.006">
+    </testcase>
+    <testcase classname="API — Items DELETE /api/items/:id returns 404 for a non-existent item" name="API — Items DELETE /api/items/:id returns 404 for a non-existent item" time="0.003">
+    </testcase>
+    <testcase classname="API — Items DELETE /api/items/:id returns 400 for a non-numeric ID" name="API — Items DELETE /api/items/:id returns 400 for a non-numeric ID" time="0.001">
+    </testcase>
+    <testcase classname="API — Items DELETE /api/items/:id returns 400 for a zero or negative ID" name="API — Items DELETE /api/items/:id returns 400 for a zero or negative ID" time="0.002">
     </testcase>
   </testsuite>
 </testsuites>

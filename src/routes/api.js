@@ -2,7 +2,6 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const client = require('prom-client');
-
 const router = express.Router();
 
 // ── Custom Prometheus metrics ──────────────────────────────────
@@ -159,6 +158,23 @@ router.put('/items/:id', (req, res) => {
   }
 
   res.json(item);
+});
+
+/**
+ * DELETE /api/items/:id
+ * Removes an item by numeric ID
+ */
+router.delete('/items/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id) || id < 1) {
+    return res.status(400).json({ error: 'Invalid item ID — must be a positive integer' });
+  }
+  const index = items.findIndex(i => i.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: `Item ${id} not found` });
+  }
+  items.splice(index, 1);
+  res.status(204).end();
 });
 
 module.exports = router;
