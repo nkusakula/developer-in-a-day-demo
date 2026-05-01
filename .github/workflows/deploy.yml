@@ -52,6 +52,17 @@ jobs:
           echo "Injecting config for ${ENVIRONMENT}: APP_VERSION=${IMAGE_TAG}, NODE_ENV=${ENVIRONMENT}, LOG_LEVEL=debug"
           # In production: pull from GitHub Secrets / Vault — never baked into image
 
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: rg-demo-aks
+          cluster-name: aks-demo
+
       - name: Deploy to development
         run: |
           echo "[$(date -u)] Deploying ghcr.io/${{ github.repository }}:${IMAGE_TAG} to ${ENVIRONMENT}"
@@ -84,6 +95,17 @@ jobs:
       - name: Inject runtime config
         run: |
           echo "Injecting config for ${ENVIRONMENT}: APP_VERSION=${IMAGE_TAG}, NODE_ENV=${ENVIRONMENT}, LOG_LEVEL=info"
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: rg-demo-aks
+          cluster-name: aks-demo
 
       - name: Deploy to staging
         run: |
@@ -178,6 +200,17 @@ jobs:
       - name: Inject production config
         run: |
           echo "Injecting config: APP_VERSION=${IMAGE_TAG}, NODE_ENV=production, LOG_LEVEL=warn"
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: rg-demo-aks
+          cluster-name: aks-demo
 
       - name: Deploy to production
         run: |
