@@ -1,4 +1,5 @@
 'use strict';
+const unused = 'demo';
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const client = require('prom-client');
