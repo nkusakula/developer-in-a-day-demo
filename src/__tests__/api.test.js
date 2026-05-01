@@ -225,4 +225,42 @@ describe('API — Items', () => {
       expect(res.body).toHaveProperty('error');
     });
   });
+
+  describe('DELETE /api/items/:id', () => {
+    it('returns 204 and removes the item on success', async () => {
+      // First create an item so we can safely delete it without affecting other tests
+      const created = await request(app)
+        .post('/api/items')
+        .send({ name: 'To Delete', category: 'temp' })
+        .set('Content-Type', 'application/json');
+      expect(created.statusCode).toBe(201);
+      const { id } = created.body;
+
+      const res = await request(app).delete(`/api/items/${id}`);
+      expect(res.statusCode).toBe(204);
+      expect(res.body).toEqual({});
+
+      // Confirm item is gone
+      const getRes = await request(app).get(`/api/items/${id}`);
+      expect(getRes.statusCode).toBe(404);
+    });
+
+    it('returns 404 for a non-existent item', async () => {
+      const res = await request(app).delete('/api/items/99999');
+      expect(res.statusCode).toBe(404);
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('returns 400 for a non-numeric ID', async () => {
+      const res = await request(app).delete('/api/items/not-a-number');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('returns 400 for a zero or negative ID', async () => {
+      const res = await request(app).delete('/api/items/0');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+  });
 });
