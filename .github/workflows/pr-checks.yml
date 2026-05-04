@@ -57,7 +57,7 @@ jobs:
         run: npm audit --json > npm-audit.json 2>/dev/null || true
       - name: Upload audit report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: npm-audit-pr-${{ github.event.pull_request.number }}
           path: npm-audit.json
