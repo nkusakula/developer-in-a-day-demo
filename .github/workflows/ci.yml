@@ -183,7 +183,7 @@ jobs:
 
       - name: Build image (with layer caching)
         id: build
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           load: ${{ github.event_name == 'pull_request' }}
