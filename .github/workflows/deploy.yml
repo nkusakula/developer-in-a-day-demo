@@ -45,7 +45,7 @@ jobs:
       IMAGE_TAG: ${{ needs.resolve-image.outputs.image-tag }}
       ENVIRONMENT: development
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Inject runtime config
         run: |
@@ -79,7 +79,7 @@ jobs:
       IMAGE_TAG: ${{ needs.resolve-image.outputs.image-tag }}
       ENVIRONMENT: staging
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Inject runtime config
         run: |
@@ -173,7 +173,7 @@ jobs:
       ENVIRONMENT: production
       CHANGE_ISSUE: ${{ needs.create-change-record.outputs.change-issue-number }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Inject production config
         run: |
