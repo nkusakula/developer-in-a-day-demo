@@ -9,6 +9,7 @@ describe('Health Endpoints', () => {
       const res = await request(app).get('/health');
       expect(res.statusCode).toBe(200);
       expect(res.body.status).toBe('healthy');
+      expect(res.body.service).toBe('developer-in-a-day-demo');
       expect(res.body).toHaveProperty('version');
       expect(res.body).toHaveProperty('environment');
       expect(res.body).toHaveProperty('uptimeSeconds');

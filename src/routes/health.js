@@ -12,6 +12,7 @@ const START_TIME = Date.now();
 router.get('/', (req, res) => {
   res.json({
     status: 'healthy',
+    service: 'developer-in-a-day-demo',
     version: process.env.APP_VERSION || '1.0.0',
     environment: process.env.NODE_ENV || 'development',
     uptimeSeconds: Math.floor((Date.now() - START_TIME) / 1000),
