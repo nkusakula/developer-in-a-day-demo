@@ -49,6 +49,26 @@ describe('API — Items', () => {
     });
   });
 
+  describe('GET /api/items/search', () => {
+    it('filters items by category query param', async () => {
+      const res = await request(app).get('/api/items/search?category=demo');
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('items');
+      expect(res.body).toHaveProperty('count');
+      expect(res.body).toHaveProperty('filter');
+      expect(res.body.filter.category).toBe('demo');
+      expect(Array.isArray(res.body.items)).toBe(true);
+      expect(res.body.items.length).toBeGreaterThan(0);
+      expect(res.body.items.every((item) => item.category === 'demo')).toBe(true);
+    });
+
+    it('returns 400 when category query param is missing', async () => {
+      const res = await request(app).get('/api/items/search');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error');
+    });
+  });
+
   describe('POST /api/items', () => {
     it('creates a new item with valid payload', async () => {
       const res = await request(app)
