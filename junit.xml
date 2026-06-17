@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="35" failures="0" errors="0" time="1.249">
-  <testsuite name="Health Endpoints" errors="0" failures="0" skipped="0" timestamp="2026-06-17T15:52:28" time="0.919" tests="5">
-    <testcase classname="Health Endpoints GET /health returns healthy status with required fields" name="Health Endpoints GET /health returns healthy status with required fields" time="0.021">
+<testsuites name="jest tests" tests="51" failures="0" errors="0" time="0.991">
+  <testsuite name="App Configuration" errors="0" failures="0" skipped="0" timestamp="2026-06-17T15:53:19" time="0.572" tests="16">
+    <testcase classname="App Configuration Middleware Setup applies helmet security headers" name="App Configuration Middleware Setup applies helmet security headers" time="0.025">
     </testcase>
-    <testcase classname="Health Endpoints GET /health/live returns alive for liveness probe" name="Health Endpoints GET /health/live returns alive for liveness probe" time="0.003">
+    <testcase classname="App Configuration Middleware Setup parses JSON payloads up to 1mb limit" name="App Configuration Middleware Setup parses JSON payloads up to 1mb limit" time="0.016">
     </testcase>
-    <testcase classname="Health Endpoints GET /health/ready returns ready for readiness probe" name="Health Endpoints GET /health/ready returns ready for readiness probe" time="0.003">
+    <testcase classname="App Configuration Middleware Setup rejects malformed JSON with error handler" name="App Configuration Middleware Setup rejects malformed JSON with error handler" time="0.01">
     </testcase>
-    <testcase classname="Health Endpoints GET /metrics returns Prometheus metrics in text format" name="Health Endpoints GET /metrics returns Prometheus metrics in text format" time="0.006">
+    <testcase classname="App Configuration Route Registration mounts health router at /health" name="App Configuration Route Registration mounts health router at /health" time="0.003">
     </testcase>
-    <testcase classname="Health Endpoints Unknown routes returns 404 for undefined paths" name="Health Endpoints Unknown routes returns 404 for undefined paths" time="0.003">
+    <testcase classname="App Configuration Route Registration mounts api router at /api" name="App Configuration Route Registration mounts api router at /api" time="0.003">
+    </testcase>
+    <testcase classname="App Configuration Metrics Endpoint exposes Prometheus metrics at /metrics" name="App Configuration Metrics Endpoint exposes Prometheus metrics at /metrics" time="0.005">
+    </testcase>
+    <testcase classname="App Configuration Metrics Endpoint tracks request metrics" name="App Configuration Metrics Endpoint tracks request metrics" time="0.008">
+    </testcase>
+    <testcase classname="App Configuration Error Handling returns 404 with error message for undefined routes" name="App Configuration Error Handling returns 404 with error message for undefined routes" time="0.002">
+    </testcase>
+    <testcase classname="App Configuration Error Handling returns 404 error message with correct path" name="App Configuration Error Handling returns 404 error message with correct path" time="0.002">
+    </testcase>
+    <testcase classname="App Configuration Error Handling handles JSON parse errors with error handler" name="App Configuration Error Handling handles JSON parse errors with error handler" time="0.003">
+    </testcase>
+    <testcase classname="App Configuration Request/Response Flow processes valid requests through middleware chain" name="App Configuration Request/Response Flow processes valid requests through middleware chain" time="0.002">
+    </testcase>
+    <testcase classname="App Configuration Request/Response Flow sets correct Content-Type for JSON responses" name="App Configuration Request/Response Flow sets correct Content-Type for JSON responses" time="0.002">
+    </testcase>
+    <testcase classname="App Configuration Request/Response Flow sets correct Content-Type for Prometheus metrics" name="App Configuration Request/Response Flow sets correct Content-Type for Prometheus metrics" time="0.003">
+    </testcase>
+    <testcase classname="App Configuration Application Behavior exports app as Express application" name="App Configuration Application Behavior exports app as Express application" time="0">
+    </testcase>
+    <testcase classname="App Configuration Application Behavior handles GET requests across different routes" name="App Configuration Application Behavior handles GET requests across different routes" time="0.007">
+    </testcase>
+    <testcase classname="App Configuration Application Behavior handles POST requests to create resources" name="App Configuration Application Behavior handles POST requests to create resources" time="0.002">
     </testcase>
   </testsuite>
-  <testsuite name="API — Items" errors="0" failures="0" skipped="0" timestamp="2026-06-17T15:52:28" time="1.021" tests="30">
-    <testcase classname="API — Items GET /api/items returns paginated item list" name="API — Items GET /api/items returns paginated item list" time="0.02">
+  <testsuite name="API — Items" errors="0" failures="0" skipped="0" timestamp="2026-06-17T15:53:20" time="0.164" tests="30">
+    <testcase classname="API — Items GET /api/items returns paginated item list" name="API — Items GET /api/items returns paginated item list" time="0.003">
     </testcase>
-    <testcase classname="API — Items GET /api/items supports pagination parameters" name="API — Items GET /api/items supports pagination parameters" time="0.004">
+    <testcase classname="API — Items GET /api/items supports pagination parameters" name="API — Items GET /api/items supports pagination parameters" time="0.002">
     </testcase>
-    <testcase classname="API — Items GET /api/items returns items sorted ascending by name when sort=asc" name="API — Items GET /api/items returns items sorted ascending by name when sort=asc" time="0.011">
+    <testcase classname="API — Items GET /api/items returns items sorted ascending by name when sort=asc" name="API — Items GET /api/items returns items sorted ascending by name when sort=asc" time="0.01">
     </testcase>
     <testcase classname="API — Items GET /api/items returns items sorted descending by name when sort=desc" name="API — Items GET /api/items returns items sorted descending by name when sort=desc" time="0.002">
     </testcase>
-    <testcase classname="API — Items GET /api/items returns 400 when sort param is invalid" name="API — Items GET /api/items returns 400 when sort param is invalid" time="0.003">
+    <testcase classname="API — Items GET /api/items returns 400 when sort param is invalid" name="API — Items GET /api/items returns 400 when sort param is invalid" time="0.001">
     </testcase>
-    <testcase classname="API — Items GET /api/items/count returns a JSON object with a numeric count" name="API — Items GET /api/items/count returns a JSON object with a numeric count" time="0.007">
+    <testcase classname="API — Items GET /api/items/count returns a JSON object with a numeric count" name="API — Items GET /api/items/count returns a JSON object with a numeric count" time="0.001">
     </testcase>
-    <testcase classname="API — Items GET /api/items/search returns items matching the given category" name="API — Items GET /api/items/search returns items matching the given category" time="0.004">
+    <testcase classname="API — Items GET /api/items/search returns items matching the given category" name="API — Items GET /api/items/search returns items matching the given category" time="0.003">
     </testcase>
     <testcase classname="API — Items GET /api/items/search returns empty array when no items match the category" name="API — Items GET /api/items/search returns empty array when no items match the category" time="0.002">
     </testcase>
-    <testcase classname="API — Items GET /api/items/search is case-insensitive for category matching" name="API — Items GET /api/items/search is case-insensitive for category matching" time="0.004">
+    <testcase classname="API — Items GET /api/items/search is case-insensitive for category matching" name="API — Items GET /api/items/search is case-insensitive for category matching" time="0.002">
     </testcase>
-    <testcase classname="API — Items GET /api/items/search returns 400 when category param is missing" name="API — Items GET /api/items/search returns 400 when category param is missing" time="0.002">
+    <testcase classname="API — Items GET /api/items/search returns 400 when category param is missing" name="API — Items GET /api/items/search returns 400 when category param is missing" time="0.001">
     </testcase>
     <testcase classname="API — Items GET /api/items/search returns 400 when category param is blank" name="API — Items GET /api/items/search returns 400 when category param is blank" time="0.002">
     </testcase>
@@ -39,25 +61,25 @@
     </testcase>
     <testcase classname="API — Items GET /api/items/:id returns 404 for non-existent item" name="API — Items GET /api/items/:id returns 404 for non-existent item" time="0.002">
     </testcase>
-    <testcase classname="API — Items GET /api/items/:id returns 400 for non-numeric ID" name="API — Items GET /api/items/:id returns 400 for non-numeric ID" time="0.001">
+    <testcase classname="API — Items GET /api/items/:id returns 400 for non-numeric ID" name="API — Items GET /api/items/:id returns 400 for non-numeric ID" time="0.002">
     </testcase>
     <testcase classname="API — Items GET /api/items/:id returns 400 for zero or negative ID" name="API — Items GET /api/items/:id returns 400 for zero or negative ID" time="0.001">
     </testcase>
-    <testcase classname="API — Items POST /api/items creates a new item with valid payload" name="API — Items POST /api/items creates a new item with valid payload" time="0.009">
+    <testcase classname="API — Items POST /api/items creates a new item with valid payload" name="API — Items POST /api/items creates a new item with valid payload" time="0.008">
     </testcase>
     <testcase classname="API — Items POST /api/items returns 400 when name is missing" name="API — Items POST /api/items returns 400 when name is missing" time="0.002">
     </testcase>
-    <testcase classname="API — Items POST /api/items returns 400 for empty name string" name="API — Items POST /api/items returns 400 for empty name string" time="0.002">
+    <testcase classname="API — Items POST /api/items returns 400 for empty name string" name="API — Items POST /api/items returns 400 for empty name string" time="0.001">
     </testcase>
     <testcase classname="API — Items PUT /api/items/:id updates an existing item name" name="API — Items PUT /api/items/:id updates an existing item name" time="0.002">
     </testcase>
-    <testcase classname="API — Items PUT /api/items/:id updates an existing item category" name="API — Items PUT /api/items/:id updates an existing item category" time="0.002">
+    <testcase classname="API — Items PUT /api/items/:id updates an existing item category" name="API — Items PUT /api/items/:id updates an existing item category" time="0.001">
     </testcase>
     <testcase classname="API — Items PUT /api/items/:id updates both name and category" name="API — Items PUT /api/items/:id updates both name and category" time="0.002">
     </testcase>
     <testcase classname="API — Items PUT /api/items/:id returns 400 when request body is empty" name="API — Items PUT /api/items/:id returns 400 when request body is empty" time="0.002">
     </testcase>
-    <testcase classname="API — Items PUT /api/items/:id returns 400 when name is an empty string" name="API — Items PUT /api/items/:id returns 400 when name is an empty string" time="0.001">
+    <testcase classname="API — Items PUT /api/items/:id returns 400 when name is an empty string" name="API — Items PUT /api/items/:id returns 400 when name is an empty string" time="0.002">
     </testcase>
     <testcase classname="API — Items PUT /api/items/:id returns 400 when category is an empty string" name="API — Items PUT /api/items/:id returns 400 when category is an empty string" time="0.002">
     </testcase>
@@ -72,6 +94,18 @@
     <testcase classname="API — Items DELETE /api/items/:id returns 400 for a non-numeric ID" name="API — Items DELETE /api/items/:id returns 400 for a non-numeric ID" time="0.001">
     </testcase>
     <testcase classname="API — Items DELETE /api/items/:id returns 400 for a zero or negative ID" name="API — Items DELETE /api/items/:id returns 400 for a zero or negative ID" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Health Endpoints" errors="0" failures="0" skipped="0" timestamp="2026-06-17T15:53:20" time="0.099" tests="5">
+    <testcase classname="Health Endpoints GET /health returns healthy status with required fields" name="Health Endpoints GET /health returns healthy status with required fields" time="0.009">
+    </testcase>
+    <testcase classname="Health Endpoints GET /health/live returns alive for liveness probe" name="Health Endpoints GET /health/live returns alive for liveness probe" time="0.002">
+    </testcase>
+    <testcase classname="Health Endpoints GET /health/ready returns ready for readiness probe" name="Health Endpoints GET /health/ready returns ready for readiness probe" time="0.002">
+    </testcase>
+    <testcase classname="Health Endpoints GET /metrics returns Prometheus metrics in text format" name="Health Endpoints GET /metrics returns Prometheus metrics in text format" time="0.003">
+    </testcase>
+    <testcase classname="Health Endpoints Unknown routes returns 404 for undefined paths" name="Health Endpoints Unknown routes returns 404 for undefined paths" time="0.002">
     </testcase>
   </testsuite>
 </testsuites>
